@@ -93,4 +93,10 @@ public class User implements Serializable {
     public void setUf(String uf) {
         this.uf = uf;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name=" + name + ", cpf=" + cpf + ", birth=" + birth + ", weight=" + weight + ", uf=" + uf + '}';
+    }
+    
 }

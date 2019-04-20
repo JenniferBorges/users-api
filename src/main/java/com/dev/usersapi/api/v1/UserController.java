@@ -34,13 +34,7 @@ public class UserController {
     Page<User> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
-
-    @GetMapping("/{id}")
-    public @ResponseBody
-    User getById(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(ResourceNotFoundException::new);
-    }
-
+    
     @PostMapping
     public void create(@RequestBody @Valid User user, BindingResult result) throws MethodArgumentNotValidException {
         user.setId(null);
@@ -52,8 +46,13 @@ public class UserController {
         if (result.hasErrors()) {
             throw new MethodArgumentNotValidException(null, result);
         }
-
         repository.save(user);
+    }        
+
+    @GetMapping("/{id}")
+    public @ResponseBody
+    User getById(@PathVariable Long id) {
+        return repository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     @PutMapping("/{id}")
@@ -83,7 +82,6 @@ public class UserController {
         for (Summary summary : repository.getSummary()) {
             map.put(summary.getUf(), summary.getCount());
         }
-        
         return map;
     }
 
